@@ -1,23 +1,25 @@
-# Fix the Java Problem
-export _JAVA_AWT_WM_NONREPARENTING=0
-
 # Enable Powerlevel10k instant prompt. Should stay at the top of ~/.zshrc.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Set up the prompt
 
+# Fix the Java Problem
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+
+# Set up the prompt
 autoload -Uz promptinit
 promptinit
 prompt adam1
-
 setopt histignorealldups sharehistory
+
 
 # Use emacs keybindings even if our EDITOR is set to vi
 bindkey -e
 
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+
+# Keep 10000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
@@ -26,7 +28,6 @@ HISTFILE=~/.zsh_history
 # Use modern completion system
 autoload -Uz compinit
 compinit
-
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
@@ -41,19 +42,27 @@ zstyle ':completion:*' menu select=long
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
-
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 source /home/g2jz/powerlevel10k/powerlevel10k.zsh-theme
 
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-# Manual configuration
 
-PATH=/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+# Plugins
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source /usr/share/zsh-sudo/sudo.plugin.zsh
 
-# Manual aliases
+
+# Manual PATH configuration
+PATH=/home/g2jz/.local/bin:/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+
+
+# Aliases
 alias ll='lsd -lah --group-dirs=first'
 alias l='lsd -lh --group-dirs=first'
 alias ls='lsd -h --group-dirs=first'
@@ -64,24 +73,18 @@ alias vi='nvim'
 alias burp='/opt/burp/burp.sh'
 
 
+# FUNCTIONS
 # Set target in polybar
 function settarget(){
     echo $1 > /home/g2jz/.config/polybar/scripts/.target.tmp
 }
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Plugins
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-#source /usr/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source /usr/share/zsh-sudo/sudo.plugin.zsh
-
-# Functions
+# Create working dirs
 function mkt(){
 	mkdir -p {enum/access,enum/privesc,content/access,content/privesc,exploits/access,exploits/privesc,scripts/access,scripts/privesc,credentials/access,credentials/privesc}
 }
+
 
 # Extract nmap information
 function extractPorts(){
@@ -93,6 +96,12 @@ function extractPorts(){
 	echo $ports | tr -d '\n' | xclip -sel clip
 	echo -e "[*] Ports copied to clipboard\n"  >> extractPorts.tmp
 	cat extractPorts.tmp; rm extractPorts.tmp
+}
+
+# Remove safely
+function rmk(){
+	scrub -p dod $1
+	shred -zun 10 -v $1
 }
 
 
@@ -119,6 +128,7 @@ function man() {
     man "$@"
 }
 
+
 # fzf improvement
 function fzf-lovely(){
 
@@ -143,13 +153,6 @@ function fzf-lovely(){
 }
 
 
-# Remove safely
-function rmk(){
-	scrub -p dod $1
-	shred -zun 10 -v $1
-}
-
-
 # Ctrl and arrow to move between words
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
@@ -166,13 +169,6 @@ bindkey "^[[5~" beginning-of-history
 bindkey "^[[6~" end-of-history
 
 
-# Finalize Powerlevel10k instant prompt. Should stay at the bottom of ~/.zshrc.
-(( ! ${+functions[p10k-instant-prompt-finalize]} )) || p10k-instant-prompt-finalize
-
-# Created by `pipx` on 2021-06-30 23:01:07
-export PATH="$PATH:/home/g2jz/.local/bin"
-
-
 # Change cursor shape for different vi modes.
 function zle-keymap-select {
   if [[ $KEYMAP == vicmd ]] || [[ $1 = 'block' ]]; then
@@ -182,6 +178,11 @@ function zle-keymap-select {
   fi
 }
 zle -N zle-keymap-select
- 
+
+
 # Start with beam shape cursor on zsh startup and after every command.
 zle-line-init() { zle-keymap-select 'beam'}
+
+
+# Finalize Powerlevel10k instant prompt. Should stay at the bottom of ~/.zshrc.
+(( ! ${+functions[p10k-instant-prompt-finalize]} )) || p10k-instant-prompt-finalize
