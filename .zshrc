@@ -104,6 +104,12 @@ function rmk(){
 	shred -zun 10 -v $1
 }
 
+# Pull Repos
+function updateRepos(){
+  cd /home/g2jz/Github/
+  ls | while read -r line; do cd $line; git pull; cd .. ; done;
+}
+
 
 #Extract Wfuzz information
 #cat fuzzAdminPHP | grep -oP '".*?"' | grep -v '#' | tr -d '"'
