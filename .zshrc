@@ -104,10 +104,31 @@ function rmk(){
 	shred -zun 10 -v $1
 }
 
-# Pull Repos
+
+# Git pull of all my repos
 function updateRepos(){
+  DIR=$PWD
   cd /home/g2jz/Github/
-  ls | while read -r line; do cd $line; git pull; cd .. ; done;
+  ls | while read -r line
+       do cd $line 
+         git pull
+         cd ..
+       done
+  cd $DIR
+}
+
+
+# Git status of all my repos
+function statusRepos(){
+  DIR=$PWD
+  cd /home/g2jz/Github/
+  ls | while read -r line 
+       do 
+         cd $line 
+         git status 
+         cd ..
+       done
+  cd $DIR
 }
 
 
