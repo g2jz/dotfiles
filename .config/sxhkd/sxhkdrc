@@ -124,7 +124,7 @@ alt + super + {Left,Down,Up,Right}
 
 # Open Firefox
 super + shift + f
-    firejail firefox
+    firejail chromium
 
 
 # Open Burpsuite
@@ -134,3 +134,7 @@ super + shift + b
 # Slimlock (Lockscreen)
 super + shift + l
     slimlock
+
+# Flameshot screenshots
+super + shift + p
+    flameshot gui
