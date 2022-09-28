@@ -70,7 +70,10 @@ alias lsn='/bin/ls'
 alias cat='batcat'
 alias catn='/bin/cat'
 alias vi='nvim'
-alias burp='/opt/burp/burp.sh'
+alias burps='burp &> /dev/null &'
+alias g='git'
+alias cme='crackmapexec'
+
 
 
 # FUNCTIONS
@@ -213,3 +216,5 @@ zle-line-init() { zle-keymap-select 'beam'}
 
 # Finalize Powerlevel10k instant prompt. Should stay at the bottom of ~/.zshrc.
 (( ! ${+functions[p10k-instant-prompt-finalize]} )) || p10k-instant-prompt-finalize
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
