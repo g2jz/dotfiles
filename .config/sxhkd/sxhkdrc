@@ -137,4 +137,4 @@ super + shift + l
 
 # Flameshot screenshots
 super + shift + p
-    flameshot gui
+    flameshot launcher
