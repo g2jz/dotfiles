@@ -26,6 +26,9 @@ feh --bg-fill /home/g2jz/Pictures/wallpaper.jpg
 # Launch Polybar
 ~/.config/polybar/./launch.sh
 
+# Fix Burpsuite Resolution
+wmname LG3D
+
 # Follow mouse
 bspc config focus_follow_pointer true
 

@@ -122,14 +122,15 @@ alt + super + {Left,Down,Up,Right}
     /home/g2jz/.config/bspwm/scripts/bspwm_resize {west,south,north,east}
 
 
+## Custom Apps
+
 # Open Firefox
 super + shift + f
-    firejail chromium
-
+    firejail firefox
 
 # Open Burpsuite
 super + shift + b
-    /opt/burp/burp.sh
+    burp
 
 # Slimlock (Lockscreen)
 super + shift + l
@@ -137,4 +138,4 @@ super + shift + l
 
 # Flameshot screenshots
 super + shift + p
-    flameshot launcher
+    flameshot gui
