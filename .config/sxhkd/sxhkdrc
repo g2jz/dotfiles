@@ -139,3 +139,7 @@ super + shift + l
 # Flameshot screenshots
 super + shift + p
     flameshot gui
+
+# VsCode
+super + shift + e
+    code
