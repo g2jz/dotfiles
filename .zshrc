@@ -85,7 +85,7 @@ function settarget(){
 
 # Create working dirs
 function mkt(){
-	mkdir -p {enum/access,enum/privesc,content/access,content/privesc,exploits/access,exploits/privesc,scripts/access,scripts/privesc,credentials/access,credentials/privesc}
+	mkdir -p {enum/access,enum/privesc,content/access,content/privesc,exploits/access,exploits/privesc,scripts/access,scripts/privesc,credentials/access,credentials/privesc,screenshots}
 }
 
 
